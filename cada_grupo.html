@@ -11,16 +11,14 @@
     --green: #00ff88;
     --bg:    #060610;
   }
-
   *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-
   html { scroll-behavior:smooth; }
-
   body {
     background: var(--bg);
     font-family: 'Rajdhani', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: 80px;
   }
 
   /* ── GRID BG ── */
@@ -29,222 +27,356 @@
     background-image:
       linear-gradient(rgba(0,245,255,.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,245,255,.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events:none;
+    background-size: 40px 40px; pointer-events:none;
   }
-
-  /* ── SCANLINES ── */
   body::after {
-    content:''; position:fixed; inset:0; z-index:999;
+    content:''; position:fixed; inset:0; z-index:900;
     background: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(0,245,255,.013) 3px, rgba(0,245,255,.013) 4px
-    );
-    pointer-events:none;
+      rgba(0,245,255,.012) 3px, rgba(0,245,255,.012) 4px
+    ); pointer-events:none;
   }
 
   /* ── HEADER ── */
   .header {
     position:relative; z-index:10;
-    padding: 48px 20px 36px;
+    padding: 44px 20px 32px;
     text-align:center;
     background: linear-gradient(180deg, rgba(0,85,255,.08) 0%, transparent 100%);
     border-bottom: 1px solid rgba(0,245,255,.08);
-    animation: fadein .7s ease both;
+    animation: fadein .6s ease both;
   }
-
   .header-sup {
     font-family:'Share Tech Mono', monospace;
     font-size:10px; letter-spacing:6px;
-    color:var(--cyan); opacity:.45;
-    text-transform:uppercase; margin-bottom:14px;
+    color:var(--cyan); opacity:.4;
+    text-transform:uppercase; margin-bottom:12px;
   }
-
   .header-logo {
     font-family:'Orbitron', monospace;
-    font-weight:900; font-size:42px;
-    line-height:1; letter-spacing:-1px;
+    font-weight:900; font-size:40px; line-height:1;
   }
-  .header-logo .t { color:#fff; text-shadow:0 0 30px rgba(255,255,255,.1); }
-  .header-logo .b { color:var(--cyan); text-shadow:0 0 20px var(--cyan); }
-
+  .header-logo .t { color:#fff; }
+  .header-logo .b { color:var(--cyan); text-shadow:0 0 18px var(--cyan); }
   .header-div {
-    width:120px; height:1px; margin:16px auto;
+    width:100px; height:1px; margin:14px auto;
     background: linear-gradient(90deg, transparent, var(--cyan), transparent);
     opacity:.4;
   }
-
   .header-sub {
     font-size:13px; letter-spacing:3px;
-    color:#fff; opacity:.35; text-transform:uppercase;
+    color:#fff; opacity:.3; text-transform:uppercase;
   }
 
-  /* ── INTRO TEXT ── */
+  /* ── INTRO ── */
   .intro {
     position:relative; z-index:10;
-    padding:28px 24px 8px;
-    text-align:center;
-    animation: fadein .7s ease .2s both;
+    padding: 24px 24px 4px; text-align:center;
+    animation: fadein .6s ease .15s both;
   }
   .intro p {
-    font-size:16px; font-weight:600; letter-spacing:1px;
-    color:#fff; opacity:.55; line-height:1.6;
+    font-size:15px; font-weight:600; color:#fff;
+    opacity:.5; line-height:1.6; letter-spacing:.5px;
   }
   .intro strong { color:var(--cyan); opacity:1; }
 
-  /* ── CARDS LIST ── */
+  /* ── CARDS ── */
   .cards {
     position:relative; z-index:10;
-    padding:20px 16px 80px;
-    display:flex; flex-direction:column; gap:16px;
-    max-width:540px; margin:0 auto;
+    padding: 18px 16px 20px;
+    display:flex; flex-direction:column; gap:14px;
+    max-width:520px; margin:0 auto;
   }
 
-  /* ── CARD ── */
   .card {
-    border-radius:6px;
-    position:relative; overflow:hidden;
-    cursor:pointer;
-    -webkit-tap-highlight-color: transparent;
+    border-radius:6px; position:relative;
+    overflow:hidden; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    min-height:136px;
+    transition: transform .2s, box-shadow .2s;
     animation: cardin .5s ease both;
-    transition: transform .25s ease, box-shadow .25s ease;
-    min-height:140px;
   }
-  .card:active { transform:scale(.98); }
+  .card:active { transform:scale(.985); }
 
   @keyframes cardin {
-    from { opacity:0; transform:translateY(24px); }
+    from { opacity:0; transform:translateY(20px); }
     to   { opacity:1; transform:translateY(0); }
   }
-  .card:nth-child(1){animation-delay:.1s}
-  .card:nth-child(2){animation-delay:.18s}
-  .card:nth-child(3){animation-delay:.26s}
-  .card:nth-child(4){animation-delay:.34s}
-  .card:nth-child(5){animation-delay:.42s}
+  .card:nth-child(1){animation-delay:.08s}
+  .card:nth-child(2){animation-delay:.15s}
+  .card:nth-child(3){animation-delay:.22s}
+  .card:nth-child(4){animation-delay:.29s}
+  .card:nth-child(5){animation-delay:.36s}
 
-  /* noise */
   .card::after {
     content:''; position:absolute; inset:0; z-index:10;
     background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     background-size:120px; mix-blend-mode:overlay; pointer-events:none;
   }
-
   .card-bg  { position:absolute; inset:0; z-index:0; }
   .card-svg { position:absolute; inset:0; z-index:1; pointer-events:none; }
-
   .watermark {
     position:absolute; font-family:'Orbitron',monospace;
-    font-weight:900; font-size:110px;
-    right:-8px; bottom:-22px;
-    line-height:1; opacity:.045; z-index:1;
-    user-select:none; white-space:nowrap;
+    font-weight:900; font-size:100px;
+    right:-6px; bottom:-18px;
+    line-height:1; opacity:.045; z-index:1; user-select:none;
   }
-
   .card-inner {
     position:absolute; inset:0; z-index:5;
-    padding:22px 24px;
-    display:flex; flex-direction:column;
-    justify-content:space-between;
+    padding:20px 22px;
+    display:flex; flex-direction:column; justify-content:space-between;
   }
-
   .card-num {
     font-family:'Share Tech Mono', monospace;
     font-size:10px; letter-spacing:5px;
-    text-transform:uppercase; opacity:.5;
+    text-transform:uppercase; opacity:.45;
     display:flex; align-items:center; gap:8px;
   }
   .card-num::before {
     content:''; display:inline-block;
-    width:16px; height:1.5px; background:currentColor;
+    width:14px; height:1.5px; background:currentColor;
   }
-
   .card-name {
     font-family:'Orbitron', monospace;
-    font-weight:900; line-height:1; letter-spacing:-0.5px;
+    font-weight:900; line-height:1;
   }
-
   .card-tag {
-    font-size:12px; font-weight:600;
-    letter-spacing:2px; text-transform:uppercase;
-    opacity:.5; margin-top:4px;
+    font-size:11px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase; opacity:.5; margin-top:4px;
   }
-
   .card-bottom {
     display:flex; justify-content:space-between; align-items:center;
   }
-
   .card-group {
     font-family:'Share Tech Mono', monospace;
-    font-size:9px; letter-spacing:3px;
-    opacity:.35; text-transform:uppercase;
+    font-size:9px; letter-spacing:3px; opacity:.3; text-transform:uppercase;
+  }
+  .card-cta {
+    font-family:'Orbitron', monospace;
+    font-size:10px; font-weight:700; letter-spacing:3px;
+    text-transform:uppercase; padding:7px 14px;
+    border:1.5px solid currentColor; opacity:.7;
+    background:transparent; color:inherit; cursor:pointer;
+    transition: opacity .2s, background .2s;
   }
 
-  .card-arrow {
-    font-size:20px; opacity:.5;
-    transition: opacity .2s, transform .2s;
-  }
-  .card:active .card-arrow { opacity:1; transform:translateX(4px); }
+  /* CARD THEMES */
+  .card-ia  { background:#050d1a; color:#e0f0ff;
+    box-shadow:0 4px 28px #0055ff1a, 0 0 0 1px #0055ff2a; }
+  .card-ia  .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #0033aa15 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #001f88 0%, transparent 55%); }
 
-  /* ── CARD THEMES ── */
-  .card-ia {
-    background:#050d1a; color:#e0f0ff;
-    box-shadow: 0 4px 30px #0055ff22, 0 0 0 1px #0055ff33;
+  .card-rob { background:#0f0a04; color:#fff3e0;
+    box-shadow:0 4px 28px #ff6a001a, 0 0 0 1px #ff6a002a; }
+  .card-rob .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #6a22000d 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #4a1500 0%, transparent 55%); }
+
+  .card-agro { background:#020e05; color:#d4f0d8;
+    box-shadow:0 4px 28px #00aa441a, 0 0 0 1px #00aa442a; }
+  .card-agro .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #00331810 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #002210 0%, transparent 55%); }
+
+  .card-aero { background:#05020f; color:#e8deff;
+    box-shadow:0 4px 28px #7700ff1a, 0 0 0 1px #7700ff2a; }
+  .card-aero .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #330066 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #1a003d 0%, transparent 55%); }
+
+  .card-ev  { background:#010e0e; color:#ccfffe;
+    box-shadow:0 4px 28px #00cccc1a, 0 0 0 1px #00cccc2a; }
+  .card-ev  .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #003333 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #002222 0%, transparent 55%); }
+
+  /* ══════════════════════════════════════
+     MODAL OVERLAY
+  ══════════════════════════════════════ */
+  .modal-overlay {
+    display:none;
+    position:fixed; inset:0; z-index:1000;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(6px);
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    animation: fadein .25s ease both;
   }
-  .card-ia .card-bg {
-    background:
-      radial-gradient(ellipse 70% 80% at 85% 50%, #0033aa18 0%, transparent 65%),
-      radial-gradient(ellipse 40% 60% at 0% 90%, #001f88 0%, transparent 55%);
+  .modal-overlay.open { display:flex; }
+
+  /* bottom sheet style */
+  .modal {
+    width:100%; max-width:520px;
+    border-radius:20px 20px 0 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 10px 0 0;
+    background: #0b0b18;
+    position:relative;
+    animation: slideup .3s ease both;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  @keyframes slideup {
+    from { transform:translateY(100%); }
+    to   { transform:translateY(0); }
   }
 
-  .card-rob {
-    background:#0f0a04; color:#fff3e0;
-    box-shadow: 0 4px 30px #ff6a0022, 0 0 0 1px #ff6a0033;
-  }
-  .card-rob .card-bg {
-    background:
-      radial-gradient(ellipse 70% 80% at 85% 50%, #6a220011 0%, transparent 65%),
-      radial-gradient(ellipse 40% 55% at 0% 90%, #4a1500 0%, transparent 55%);
+  /* drag handle */
+  .modal-handle {
+    width:40px; height:4px; border-radius:2px;
+    background:rgba(255,255,255,.15);
+    margin:0 auto 20px;
   }
 
-  .card-agro {
-    background:#020e05; color:#d4f0d8;
-    box-shadow: 0 4px 30px #00aa4422, 0 0 0 1px #00aa4433;
-  }
-  .card-agro .card-bg {
-    background:
-      radial-gradient(ellipse 70% 80% at 85% 50%, #00331811 0%, transparent 65%),
-      radial-gradient(ellipse 40% 55% at 0% 90%, #002210 0%, transparent 55%);
+  /* colored top accent per team */
+  .modal-accent {
+    position:absolute; top:0; left:0; right:0;
+    height:3px; border-radius:20px 20px 0 0;
   }
 
-  .card-aero {
-    background:#05020f; color:#e8deff;
-    box-shadow: 0 4px 30px #7700ff22, 0 0 0 1px #7700ff33;
+  .modal-head {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
   }
-  .card-aero .card-bg {
-    background:
-      radial-gradient(ellipse 70% 80% at 85% 50%, #330066 0%, transparent 65%),
-      radial-gradient(ellipse 40% 55% at 0% 90%, #1a003d 0%, transparent 55%);
+  .modal-badge {
+    font-family:'Share Tech Mono', monospace;
+    font-size:9px; letter-spacing:5px;
+    text-transform:uppercase; opacity:.45;
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:6px;
+  }
+  .modal-badge::before {
+    content:''; display:inline-block;
+    width:12px; height:1.5px; background:currentColor;
+  }
+  .modal-title {
+    font-family:'Orbitron', monospace;
+    font-weight:900; font-size:28px; line-height:1;
+    color:#fff; margin-bottom:4px;
+  }
+  .modal-sub {
+    font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; opacity:.4; color:#fff;
   }
 
-  .card-ev {
-    background:#010e0e; color:#ccfffe;
-    box-shadow: 0 4px 30px #00cccc22, 0 0 0 1px #00cccc33;
+  /* FORM */
+  .modal-form { padding:22px 24px 32px; display:flex; flex-direction:column; gap:16px; }
+
+  .field { display:flex; flex-direction:column; gap:6px; }
+  .field label {
+    font-family:'Share Tech Mono', monospace;
+    font-size:10px; letter-spacing:4px;
+    text-transform:uppercase; color:#fff; opacity:.4;
   }
-  .card-ev .card-bg {
-    background:
-      radial-gradient(ellipse 70% 80% at 85% 50%, #003333 0%, transparent 65%),
-      radial-gradient(ellipse 40% 55% at 0% 90%, #002222 0%, transparent 55%);
+  .field input, .field select, .field textarea {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius:4px;
+    color:#fff;
+    font-family:'Rajdhani', sans-serif;
+    font-size:16px; font-weight:600;
+    padding:13px 16px;
+    outline:none;
+    width:100%;
+    transition: border-color .2s, background .2s;
+    -webkit-appearance:none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color:rgba(255,255,255,.2); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color:var(--accent, var(--cyan));
+    background: rgba(255,255,255,.07);
+  }
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff44' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 16px center;
+    padding-right:40px;
+    cursor:pointer;
+  }
+  .field select option { background:#0b0b18; color:#fff; }
+  .field textarea { resize:none; height:80px; line-height:1.5; }
+
+  .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+  /* submit button */
+  .btn-submit {
+    width:100%;
+    background:var(--accent, var(--cyan));
+    color:#000;
+    font-family:'Orbitron', monospace;
+    font-size:13px; font-weight:700; letter-spacing:4px;
+    text-transform:uppercase;
+    border:none; border-radius:4px;
+    padding:16px;
+    cursor:pointer;
+    transition: opacity .2s, transform .15s;
+    margin-top:4px;
+  }
+  .btn-submit:active { opacity:.85; transform:scale(.98); }
+
+  /* cancel */
+  .btn-cancel {
+    width:100%;
+    background:transparent;
+    color:rgba(255,255,255,.3);
+    font-family:'Share Tech Mono', monospace;
+    font-size:11px; letter-spacing:3px;
+    text-transform:uppercase;
+    border:none; padding:12px;
+    cursor:pointer;
+  }
+
+  /* ── SUCCESS STATE ── */
+  .modal-success {
+    display:none;
+    flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:40px 24px 48px;
+    text-align:center; gap:16px;
+  }
+  .modal-success.show { display:flex; }
+  .modal-form.hide { display:none; }
+  .modal-head.hide { display:none; }
+
+  .success-icon {
+    width:64px; height:64px; border-radius:50%;
+    background:rgba(0,255,136,.1);
+    border:2px solid var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
+    animation: popin .4s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes popin {
+    from { transform:scale(0); opacity:0; }
+    to   { transform:scale(1); opacity:1; }
+  }
+  .success-title {
+    font-family:'Orbitron', monospace;
+    font-weight:900; font-size:22px; color:#fff;
+  }
+  .success-msg {
+    font-size:15px; color:#fff; opacity:.5;
+    line-height:1.6; letter-spacing:.5px;
+  }
+  .success-team {
+    font-family:'Orbitron', monospace;
+    font-size:13px; letter-spacing:3px;
+    text-transform:uppercase; padding:8px 20px;
+    border:1.5px solid var(--green);
+    color:var(--green); border-radius:4px;
+  }
+  .btn-close-success {
+    margin-top:8px; background:transparent;
+    color:rgba(255,255,255,.25);
+    font-family:'Share Tech Mono', monospace;
+    font-size:11px; letter-spacing:3px;
+    text-transform:uppercase; border:none; cursor:pointer;
   }
 
   /* ── FOOTER ── */
   .footer {
-    position:fixed; bottom:0; left:0; right:0; z-index:20;
-    height:48px; border-top:1px solid rgba(0,245,255,.1);
+    position:fixed; bottom:0; left:0; right:0; z-index:50;
+    height:46px; border-top:1px solid rgba(0,245,255,.08);
     background:rgba(6,6,16,.92);
-    display:flex; align-items:center; justify-content:center; gap:12px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
   }
   .footer-dot {
-    width:7px; height:7px; border-radius:50%;
+    width:6px; height:6px; border-radius:50%;
     background:var(--green); box-shadow:0 0 8px var(--green);
     animation:blink 1.1s step-end infinite;
   }
@@ -252,7 +384,7 @@
   .footer-text {
     font-family:'Share Tech Mono', monospace;
     font-size:11px; letter-spacing:4px;
-    color:#fff; opacity:.3; text-transform:uppercase;
+    color:#fff; opacity:.25; text-transform:uppercase;
   }
   .footer-text span { color:var(--cyan); opacity:1; }
 
@@ -264,146 +396,216 @@
 <!-- HEADER -->
 <div class="header">
   <div class="header-sup">Faculdade · T.I.</div>
-  <div class="header-logo">
-    <span class="t">TEAM </span><span class="b">BOTS</span>
-  </div>
+  <div class="header-logo"><span class="t">TEAM </span><span class="b">BOTS</span></div>
   <div class="header-div"></div>
   <div class="header-sub">Escolha sua equipe</div>
 </div>
 
 <!-- INTRO -->
 <div class="intro">
-  <p>Somos um grupo de <strong>5 equipes</strong> de tecnologia.<br>Toque na equipe que te interessa!</p>
+  <p>Somos um grupo de <strong>5 equipes</strong> de tecnologia.<br>Toque na equipe e se inscreva!</p>
 </div>
 
 <!-- CARDS -->
 <div class="cards">
 
   <!-- IA -->
-  <div class="card card-ia">
+  <div class="card card-ia" onclick="openModal('ia')">
     <div class="card-bg"></div>
-    <svg class="card-svg" viewBox="0 0 420 140">
-      <circle cx="340" cy="55" r="2" fill="#2277ff" opacity=".6"/>
-      <circle cx="375" cy="90" r="1.5" fill="#2277ff" opacity=".4"/>
-      <circle cx="400" cy="35" r="2.5" fill="#2277ff" opacity=".5"/>
-      <line x1="340" y1="55" x2="375" y2="90" stroke="#2277ff" stroke-width=".7" opacity=".25"/>
-      <line x1="375" y1="90" x2="400" y2="35" stroke="#2277ff" stroke-width=".7" opacity=".2"/>
-      <line x1="280" y1="0" x2="420" y2="140" stroke="#1155ff" stroke-width="1" opacity=".15"/>
+    <svg class="card-svg" viewBox="0 0 420 136">
+      <circle cx="345" cy="50" r="2" fill="#2277ff" opacity=".6"/>
+      <circle cx="378" cy="88" r="1.5" fill="#2277ff" opacity=".4"/>
+      <circle cx="402" cy="32" r="2.5" fill="#2277ff" opacity=".5"/>
+      <circle cx="415" cy="105" r="1.8" fill="#2277ff" opacity=".35"/>
+      <line x1="345" y1="50" x2="378" y2="88" stroke="#2277ff" stroke-width=".7" opacity=".25"/>
+      <line x1="378" y1="88" x2="402" y2="32" stroke="#2277ff" stroke-width=".7" opacity=".2"/>
+      <line x1="402" y1="32" x2="415" y2="105" stroke="#2277ff" stroke-width=".7" opacity=".2"/>
+      <line x1="285" y1="0" x2="420" y2="136" stroke="#1155ff" stroke-width=".8" opacity=".14"/>
     </svg>
     <span class="watermark">IA</span>
     <div class="card-inner">
       <span class="card-num">Equipe 01</span>
       <div>
-        <div class="card-name" style="font-size:38px">IA</div>
+        <div class="card-name" style="font-size:36px">IA</div>
         <div class="card-tag">Inteligência Artificial · Machine Learning</div>
       </div>
       <div class="card-bottom">
         <span class="card-group">Team Bots</span>
-        <span class="card-arrow">→</span>
+        <span class="card-cta" style="color:#2277ff;border-color:#2277ff66">Inscrever-se →</span>
       </div>
     </div>
   </div>
 
   <!-- ROBÓTICA -->
-  <div class="card card-rob">
+  <div class="card card-rob" onclick="openModal('rob')">
     <div class="card-bg"></div>
-    <svg class="card-svg" viewBox="0 0 420 140">
-      <circle cx="370" cy="65" r="45" stroke="#ff6a00" stroke-width="1.5" fill="none" opacity=".1"/>
-      <circle cx="370" cy="65" r="28" stroke="#ff6a00" stroke-width="1" fill="none" opacity=".07"/>
-      <line x1="370" y1="18" x2="370" y2="28" stroke="#ff6a00" stroke-width="2" opacity=".17"/>
-      <line x1="370" y1="102" x2="370" y2="112" stroke="#ff6a00" stroke-width="2" opacity=".17"/>
-      <line x1="323" y1="65" x2="333" y2="65" stroke="#ff6a00" stroke-width="2" opacity=".17"/>
-      <line x1="407" y1="65" x2="417" y2="65" stroke="#ff6a00" stroke-width="2" opacity=".17"/>
+    <svg class="card-svg" viewBox="0 0 420 136">
+      <circle cx="372" cy="62" r="44" stroke="#ff6a00" stroke-width="1.5" fill="none" opacity=".1"/>
+      <circle cx="372" cy="62" r="27" stroke="#ff6a00" stroke-width="1" fill="none" opacity=".07"/>
+      <line x1="372" y1="16" x2="372" y2="26" stroke="#ff6a00" stroke-width="2" opacity=".16"/>
+      <line x1="372" y1="98" x2="372" y2="108" stroke="#ff6a00" stroke-width="2" opacity=".16"/>
+      <line x1="326" y1="62" x2="336" y2="62" stroke="#ff6a00" stroke-width="2" opacity=".16"/>
+      <line x1="408" y1="62" x2="418" y2="62" stroke="#ff6a00" stroke-width="2" opacity=".16"/>
+      <line x1="290" y1="0" x2="420" y2="136" stroke="#ff6a00" stroke-width=".8" opacity=".1"/>
     </svg>
     <span class="watermark">ROB</span>
     <div class="card-inner">
       <span class="card-num">Equipe 02</span>
       <div>
-        <div class="card-name" style="font-size:28px">ROBÓTICA</div>
+        <div class="card-name" style="font-size:26px">ROBÓTICA</div>
         <div class="card-tag">Automação · Sistemas Embarcados · Hardware</div>
       </div>
       <div class="card-bottom">
         <span class="card-group">Team Bots</span>
-        <span class="card-arrow">→</span>
+        <span class="card-cta" style="color:#ff6a00;border-color:#ff6a0066">Inscrever-se →</span>
       </div>
     </div>
   </div>
 
   <!-- AGRO -->
-  <div class="card card-agro">
+  <div class="card card-agro" onclick="openModal('agro')">
     <div class="card-bg"></div>
-    <svg class="card-svg" viewBox="0 0 420 140">
-      <polygon points="370,15 395,29 395,57 370,71 345,57 345,29" stroke="#00cc55" stroke-width="1" fill="none" opacity=".12"/>
-      <polygon points="370,78 395,92 395,120 370,134 345,120 345,92" stroke="#00cc55" stroke-width="1" fill="none" opacity=".07"/>
-      <circle cx="330" cy="100" r="1.5" fill="#00cc55" opacity=".4"/>
-      <circle cx="410" cy="115" r="2" fill="#00cc55" opacity=".35"/>
-      <line x1="290" y1="0" x2="420" y2="140" stroke="#00cc55" stroke-width=".8" opacity=".13"/>
+    <svg class="card-svg" viewBox="0 0 420 136">
+      <polygon points="372,14 396,28 396,56 372,70 348,56 348,28" stroke="#00cc55" stroke-width="1" fill="none" opacity=".12"/>
+      <polygon points="372,76 396,90 396,118 372,132 348,118 348,90" stroke="#00cc55" stroke-width="1" fill="none" opacity=".07"/>
+      <circle cx="325" cy="95" r="1.5" fill="#00cc55" opacity=".4"/>
+      <circle cx="408" cy="110" r="2" fill="#00cc55" opacity=".35"/>
+      <line x1="290" y1="0" x2="420" y2="136" stroke="#00cc55" stroke-width=".8" opacity=".12"/>
     </svg>
     <span class="watermark">AGR</span>
     <div class="card-inner">
       <span class="card-num">Equipe 03</span>
       <div>
-        <div class="card-name" style="font-size:38px">AGRO</div>
+        <div class="card-name" style="font-size:36px">AGRO</div>
         <div class="card-tag">Agrotecnologia · Precisão · IoT no Campo</div>
       </div>
       <div class="card-bottom">
         <span class="card-group">Team Bots</span>
-        <span class="card-arrow">→</span>
+        <span class="card-cta" style="color:#00cc55;border-color:#00cc5566">Inscrever-se →</span>
       </div>
     </div>
   </div>
 
   <!-- AEROESPACIAL -->
-  <div class="card card-aero">
+  <div class="card card-aero" onclick="openModal('aero')">
     <div class="card-bg"></div>
-    <svg class="card-svg" viewBox="0 0 420 140">
-      <ellipse cx="375" cy="55" rx="58" ry="30" stroke="#aa44ff" stroke-width="1" fill="none" opacity=".12" transform="rotate(-20 375 55)"/>
-      <circle cx="375" cy="55" r="5" fill="#7700ff" opacity=".3"/>
-      <circle cx="310" cy="25" r="1.2" fill="white" opacity=".35"/>
-      <circle cx="408" cy="110" r="1" fill="white" opacity=".3"/>
-      <circle cx="405" cy="30" r="1" fill="white" opacity=".4"/>
-      <path d="M310 130 Q355 85 405 30" stroke="#cc88ff" stroke-width="1" fill="none" stroke-dasharray="4 4" opacity=".18"/>
+    <svg class="card-svg" viewBox="0 0 420 136">
+      <ellipse cx="376" cy="52" rx="56" ry="28" stroke="#aa44ff" stroke-width="1" fill="none" opacity=".12" transform="rotate(-18 376 52)"/>
+      <circle cx="376" cy="52" r="5" fill="#7700ff" opacity=".28"/>
+      <circle cx="315" cy="24" r="1.2" fill="white" opacity=".3"/>
+      <circle cx="407" cy="108" r="1" fill="white" opacity=".25"/>
+      <circle cx="405" cy="26" r="1" fill="white" opacity=".35"/>
+      <path d="M315 124 Q355 80 405 26" stroke="#cc88ff" stroke-width="1" fill="none" stroke-dasharray="4 4" opacity=".17"/>
     </svg>
     <span class="watermark">AER</span>
     <div class="card-inner">
       <span class="card-num">Equipe 04</span>
       <div>
-        <div class="card-name" style="font-size:24px">AEROESPACIAL</div>
+        <div class="card-name" style="font-size:22px">AEROESPACIAL</div>
         <div class="card-tag">Drones · Foguetes · Exploração Espacial</div>
       </div>
       <div class="card-bottom">
         <span class="card-group">Team Bots</span>
-        <span class="card-arrow">→</span>
+        <span class="card-cta" style="color:#aa44ff;border-color:#aa44ff66">Inscrever-se →</span>
       </div>
     </div>
   </div>
 
   <!-- CARRO ELÉTRICO -->
-  <div class="card card-ev">
+  <div class="card card-ev" onclick="openModal('ev')">
     <div class="card-bg"></div>
-    <svg class="card-svg" viewBox="0 0 420 140">
-      <line x1="290" y1="45" x2="420" y2="45" stroke="#00ffee" stroke-width="1" opacity=".1"/>
-      <line x1="305" y1="60" x2="420" y2="60" stroke="#00ffee" stroke-width=".6" opacity=".07"/>
-      <line x1="320" y1="75" x2="420" y2="75" stroke="#00ffee" stroke-width=".8" opacity=".09"/>
-      <rect x="340" y="90" width="52" height="26" rx="4" stroke="#00cccc" stroke-width="1.2" fill="none" opacity=".14"/>
-      <rect x="390" y="100" width="7" height="9" rx="1" stroke="#00cccc" stroke-width="1" fill="none" opacity=".14"/>
-      <path d="M357 98 L353 103 L356 103 L352 113 L360 107 L357 107 Z" fill="#00ffee" opacity=".28"/>
-      <line x1="280" y1="0" x2="420" y2="140" stroke="#00cccc" stroke-width=".8" opacity=".12"/>
+    <svg class="card-svg" viewBox="0 0 420 136">
+      <line x1="295" y1="42" x2="420" y2="42" stroke="#00ffee" stroke-width="1" opacity=".09"/>
+      <line x1="310" y1="58" x2="420" y2="58" stroke="#00ffee" stroke-width=".6" opacity=".07"/>
+      <line x1="325" y1="74" x2="420" y2="74" stroke="#00ffee" stroke-width=".8" opacity=".08"/>
+      <rect x="345" y="88" width="52" height="26" rx="4" stroke="#00cccc" stroke-width="1.2" fill="none" opacity=".13"/>
+      <rect x="395" y="98" width="7" height="9" rx="1" stroke="#00cccc" stroke-width="1" fill="none" opacity=".13"/>
+      <path d="M358 96 L354 101 L357 101 L353 112 L361 105 L358 105 Z" fill="#00ffee" opacity=".26"/>
+      <line x1="280" y1="0" x2="420" y2="136" stroke="#00cccc" stroke-width=".8" opacity=".11"/>
     </svg>
     <span class="watermark">EV</span>
     <div class="card-inner">
       <span class="card-num">Equipe 05</span>
       <div>
-        <div class="card-name" style="font-size:24px; line-height:1.2">CARRO<br>ELÉTRICO</div>
+        <div class="card-name" style="font-size:22px; line-height:1.2">CARRO<br>ELÉTRICO</div>
         <div class="card-tag">Mobilidade Elétrica · EV · Energia Limpa</div>
       </div>
       <div class="card-bottom">
         <span class="card-group">Team Bots</span>
-        <span class="card-arrow">→</span>
+        <span class="card-cta" style="color:#00cccc;border-color:#00cccc66">Inscrever-se →</span>
       </div>
     </div>
   </div>
 
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal-box">
+
+    <div class="modal-accent" id="modal-accent"></div>
+    <div class="modal-handle"></div>
+
+    <!-- HEAD -->
+    <div class="modal-head" id="modal-head">
+      <div class="modal-badge" id="modal-badge"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-sub"   id="modal-sub"></div>
+    </div>
+
+    <!-- FORM -->
+    <div class="modal-form" id="modal-form">
+
+      <div class="field">
+        <label>Nome completo</label>
+        <input type="text" id="f-nome" placeholder="Seu nome" autocomplete="name"/>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Curso</label>
+          <input type="text" id="f-curso" placeholder="Ex: Engenharia"/>
+        </div>
+        <div class="field">
+          <label>Período</label>
+          <select id="f-periodo">
+            <option value="" disabled selected>Selecione</option>
+            <option>1º</option><option>2º</option><option>3º</option>
+            <option>4º</option><option>5º</option><option>6º</option>
+            <option>7º</option><option>8º</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" id="f-tel" placeholder="(34) 9 9999-9999" autocomplete="tel"/>
+      </div>
+
+      <div class="field">
+        <label>Por que quer entrar? (opcional)</label>
+        <textarea id="f-motivo" placeholder="Conte um pouco sobre seu interesse…"></textarea>
+      </div>
+
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+        Enviar inscrição
+      </button>
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="modal-success" id="modal-success">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Inscrição enviada!</div>
+      <div class="success-msg">Obrigado pelo interesse.<br>Em breve entraremos em contato.</div>
+      <div class="success-team" id="success-team"></div>
+      <button class="btn-close-success" onclick="closeModal()">Fechar</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -412,5 +614,120 @@
   <div class="footer-text">Team Bots · <span>Recrutando agora</span></div>
 </div>
 
+<script>
+const teams = {
+  ia: {
+    num:'Equipe 01', title:'IA',
+    sub:'Inteligência Artificial · Machine Learning',
+    accent:'#2277ff', accentAlpha:'rgba(34,119,255,.15)'
+  },
+  rob: {
+    num:'Equipe 02', title:'ROBÓTICA',
+    sub:'Automação · Sistemas Embarcados · Hardware',
+    accent:'#ff6a00', accentAlpha:'rgba(255,106,0,.15)'
+  },
+  agro: {
+    num:'Equipe 03', title:'AGRO',
+    sub:'Agrotecnologia · Precisão · IoT no Campo',
+    accent:'#00cc55', accentAlpha:'rgba(0,204,85,.15)'
+  },
+  aero: {
+    num:'Equipe 04', title:'AEROESPACIAL',
+    sub:'Drones · Foguetes · Exploração Espacial',
+    accent:'#aa44ff', accentAlpha:'rgba(170,68,255,.15)'
+  },
+  ev: {
+    num:'Equipe 05', title:'CARRO ELÉTRICO',
+    sub:'Mobilidade Elétrica · EV · Energia Limpa',
+    accent:'#00cccc', accentAlpha:'rgba(0,204,204,.15)'
+  }
+};
+
+let currentTeam = null;
+
+function openModal(id) {
+  const t = teams[id];
+  currentTeam = id;
+
+  // populate head
+  document.getElementById('modal-badge').textContent  = t.num;
+  document.getElementById('modal-badge').style.color  = t.accent;
+  document.getElementById('modal-title').textContent  = t.title;
+  document.getElementById('modal-sub').textContent    = t.sub;
+  document.getElementById('modal-accent').style.background = t.accent;
+
+  // color accent on inputs focus via CSS variable
+  document.getElementById('modal-box').style.setProperty('--accent', t.accent);
+
+  // submit button color
+  document.getElementById('btn-submit').style.background = t.accent;
+
+  // reset form & success
+  document.getElementById('modal-form').classList.remove('hide');
+  document.getElementById('modal-head').classList.remove('hide');
+  document.getElementById('modal-success').classList.remove('show');
+
+  // clear fields
+  ['f-nome','f-curso','f-tel','f-motivo'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  document.getElementById('f-periodo').selectedIndex = 0;
+
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if(e.target === document.getElementById('modal')) closeModal();
+}
+
+function submitForm() {
+  const nome = document.getElementById('f-nome').value.trim();
+  const curso = document.getElementById('f-curso').value.trim();
+  const periodo = document.getElementById('f-periodo').value;
+  const tel = document.getElementById('f-tel').value.trim();
+
+  if(!nome || !curso || !periodo || !tel) {
+    // shake fields with error
+    const btn = document.getElementById('btn-submit');
+    btn.style.background = '#ff4444';
+    btn.textContent = 'Preencha os campos obrigatórios';
+    setTimeout(() => {
+      const t = teams[currentTeam];
+      btn.style.background = t.accent;
+      btn.textContent = 'Enviar inscrição';
+    }, 2000);
+    return;
+  }
+
+  // store locally (simple demo — in production connect to a backend/sheet)
+  const entry = {
+    equipe: teams[currentTeam].title,
+    nome, curso, periodo, tel,
+    motivo: document.getElementById('f-motivo').value.trim(),
+    timestamp: new Date().toLocaleString('pt-BR')
+  };
+  const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
+  all.push(entry);
+  localStorage.setItem('teambots_inscritos', JSON.stringify(all));
+
+  // show success
+  document.getElementById('modal-form').classList.add('hide');
+  document.getElementById('modal-head').classList.add('hide');
+  document.getElementById('success-team').textContent = teams[currentTeam].title;
+  document.getElementById('success-team').style.color = teams[currentTeam].accent;
+  document.getElementById('success-team').style.borderColor = teams[currentTeam].accent;
+  document.getElementById('modal-success').classList.add('show');
+}
+
+// close on back button (Android)
+window.addEventListener('popstate', closeModal);
+</script>
 </body>
 </html>
