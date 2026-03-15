@@ -704,12 +704,18 @@ async function submitForm() {
   };
 
   await new Promise((resolve) => {
-    const img = new Image();
-    const params = new URLSearchParams(dados);
-    img.onload  = resolve;
-    img.onerror = resolve;
-    img.src = SCRIPT_URL + '?' + params.toString();
-    setTimeout(resolve, 4000);
+    const callbackName = 'tb_cb_' + Date.now();
+    window[callbackName] = function() {
+      delete window[callbackName];
+      document.getElementById('jsonp-container').innerHTML = '';
+      resolve();
+    };
+    const params = new URLSearchParams({ ...dados, callback: callbackName });
+    const script = document.createElement('script');
+    script.src = SCRIPT_URL + '?' + params.toString();
+    script.onerror = resolve;
+    document.getElementById('jsonp-container').appendChild(script);
+    setTimeout(resolve, 5000);
   });
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
@@ -728,5 +734,6 @@ async function submitForm() {
 
 window.addEventListener('popstate', closeModal);
 </script>
+<div id="jsonp-container" style="display:none"></div>
 </body>
 </html>
