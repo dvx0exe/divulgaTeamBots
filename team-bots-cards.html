@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Bots - Cards de Divulgação</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Rajdhani', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 60px 20px;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    letter-spacing: 8px;
+    color: #ffffff44;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ── CARD SHELL ─────────────────────────────── */
+  .card {
+    width: 520px;
+    height: 290px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: default;
+    transition: transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover { transform: translateY(-6px) scale(1.015); }
+
+  /* noise grain overlay */
+  .card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 120px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .card-inner {
+    position: absolute; inset: 0;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  /* shared text elements */
+  .badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: .7;
+  }
+  .badge::before {
+    content: '';
+    display: inline-block;
+    width: 22px; height: 2px;
+    background: currentColor;
+  }
+
+  .team-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .65;
+    margin-top: 6px;
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .group-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: .5;
+  }
+
+  .cta {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1.5px solid currentColor;
+    opacity: .7;
+    transition: opacity .3s;
+  }
+  .card:hover .cta { opacity: 1; }
+
+  /* decorative SVG shapes */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ══════════════════════════════════════════════
+     CARD 1 — IA  (electric blue / midnight)
+  ══════════════════════════════════════════════ */
+  .card-ia {
+    background: #050d1a;
+    color: #e0f0ff;
+    box-shadow: 0 0 60px #0055ff33, 0 0 0 1px #0055ff44;
+  }
+  .card-ia:hover { box-shadow: 0 20px 80px #0055ff55, 0 0 0 1px #0055ff88; }
+
+  .ia-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 50%, #0033aa22 0%, transparent 70%),
+      radial-gradient(ellipse 30% 50% at 10% 80%, #002299 0%, transparent 60%);
+  }
+
+  .ia-circuit {
+    right: -10px; top: -10px; width: 280px; height: 280px; opacity: .18;
+  }
+
+  /* ══════════════════════════════════════════════
+     CARD 2 — ROBÓTICA  (orange / charcoal)
+  ══════════════════════════════════════════════ */
+  .card-robotica {
+    background: #0f0a04;
+    color: #fff3e0;
+    box-shadow: 0 0 60px #ff6a0033, 0 0 0 1px #ff6a0044;
+  }
+  .card-robotica:hover { box-shadow: 0 20px 80px #ff6a0066, 0 0 0 1px #ff6a0088; }
+
+  .rob-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 70% at 75% 40%, #7a280022 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 5% 90%, #5a1a00 0%, transparent 60%);
+  }
+
+  /* ══════════════════════════════════════════════
+     CARD 3 — AGRO  (deep green / earth)
+  ══════════════════════════════════════════════ */
+  .card-agro {
+    background: #020e05;
+    color: #d4f0d8;
+    box-shadow: 0 0 60px #00aa4433, 0 0 0 1px #00aa4444;
+  }
+  .card-agro:hover { box-shadow: 0 20px 80px #00aa4455, 0 0 0 1px #00aa4488; }
+
+  .agro-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 40%, #003318 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 0% 100%, #002210 0%, transparent 60%);
+  }
+
+  /* ══════════════════════════════════════════════
+     CARD 4 — AEROESPACIAL  (violet / deep space)
+  ══════════════════════════════════════════════ */
+  .card-aero {
+    background: #05020f;
+    color: #e8deff;
+    box-shadow: 0 0 60px #7700ff33, 0 0 0 1px #7700ff44;
+  }
+  .card-aero:hover { box-shadow: 0 20px 80px #7700ff55, 0 0 0 1px #7700ff88; }
+
+  .aero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 75% 45%, #330066 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 10% 85%, #1a003d 0%, transparent 55%);
+  }
+
+  /* ══════════════════════════════════════════════
+     CARD 5 — CARRO ELÉTRICO  (cyan / carbon)
+  ══════════════════════════════════════════════ */
+  .card-carro {
+    background: #010e0e;
+    color: #ccfffe;
+    box-shadow: 0 0 60px #00cccc33, 0 0 0 1px #00cccc44;
+  }
+  .card-carro:hover { box-shadow: 0 20px 80px #00cccc55, 0 0 0 1px #00cccc88; }
+
+  .carro-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 80% 50%, #003333 0%, transparent 65%),
+      radial-gradient(ellipse 40% 45% at 5% 85%, #002222 0%, transparent 55%);
+  }
+
+  /* ── accent lines ─ */
+  .acline {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── big number watermark ─ */
+  .watermark {
+    position: absolute;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 200px;
+    right: -20px;
+    bottom: -40px;
+    line-height: 1;
+    opacity: .04;
+    z-index: 1;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* ── print helper ─ */
+  @media print {
+    body { background: white; gap: 30px; padding: 20px; }
+    .card { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Team Bots · IT Division · Cards de Divulgação</p>
+
+<!-- ━━━━━━━━━━ CARD 1 · IA ━━━━━━━━━━ -->
+<div class="card card-ia">
+  <div class="ia-bg"></div>
+
+  <!-- diagonal accent line -->
+  <svg class="acline" width="520" height="290" viewBox="0 0 520 290">
+    <line x1="330" y1="0" x2="520" y2="180" stroke="#1155ff" stroke-width="1" opacity=".35"/>
+    <line x1="370" y1="0" x2="520" y2="120" stroke="#1155ff" stroke-width=".5" opacity=".2"/>
+    <!-- neural dots -->
+    <circle cx="400" cy="80" r="2.5" fill="#2277ff" opacity=".6"/>
+    <circle cx="430" cy="130" r="1.8" fill="#2277ff" opacity=".4"/>
+    <circle cx="460" cy="60" r="3" fill="#2277ff" opacity=".5"/>
+    <circle cx="480" cy="160" r="2" fill="#2277ff" opacity=".35"/>
+    <line x1="400" y1="80" x2="430" y2="130" stroke="#2277ff" stroke-width=".7" opacity=".25"/>
+    <line x1="430" y1="130" x2="460" y2="60" stroke="#2277ff" stroke-width=".7" opacity=".2"/>
+    <line x1="460" y1="60" x2="480" y2="160" stroke="#2277ff" stroke-width=".7" opacity=".2"/>
+  </svg>
+
+  <span class="watermark">IA</span>
+
+  <div class="card-inner">
+    <span class="badge">Equipe</span>
+    <div>
+      <div class="team-name">IA</div>
+      <div class="tagline">Inteligência Artificial &amp; Machine Learning</div>
+    </div>
+    <div class="bottom-row">
+      <span class="group-name">Team Bots</span>
+      <span class="cta">Faça parte</span>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━━━━━ CARD 2 · ROBÓTICA ━━━━━━━━━━ -->
+<div class="card card-robotica">
+  <div class="rob-bg"></div>
+
+  <svg class="acline" width="520" height="290" viewBox="0 0 520 290">
+    <!-- gear outline -->
+    <circle cx="430" cy="100" r="55" stroke="#ff6a00" stroke-width="1.5" fill="none" opacity=".12"/>
+    <circle cx="430" cy="100" r="35" stroke="#ff6a00" stroke-width="1" fill="none" opacity=".1"/>
+    <!-- gear teeth marks -->
+    <line x1="430" y1="42" x2="430" y2="52" stroke="#ff6a00" stroke-width="2" opacity=".2"/>
+    <line x1="430" y1="148" x2="430" y2="158" stroke="#ff6a00" stroke-width="2" opacity=".2"/>
+    <line x1="372" y1="100" x2="382" y2="100" stroke="#ff6a00" stroke-width="2" opacity=".2"/>
+    <line x1="478" y1="100" x2="488" y2="100" stroke="#ff6a00" stroke-width="2" opacity=".2"/>
+    <!-- diagonal cross-hair -->
+    <line x1="340" y1="0" x2="520" y2="220" stroke="#ff6a00" stroke-width=".8" opacity=".15"/>
+  </svg>
+
+  <span class="watermark">ROB</span>
+
+  <div class="card-inner">
+    <span class="badge">Equipe</span>
+    <div>
+      <div class="team-name" style="font-size:38px; letter-spacing:-1px;">ROBÓTICA</div>
+      <div class="tagline">Automação · Sistemas Embarcados · Hardware</div>
+    </div>
+    <div class="bottom-row">
+      <span class="group-name">Team Bots</span>
+      <span class="cta">Faça parte</span>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━━━━━ CARD 3 · AGRO ━━━━━━━━━━ -->
+<div class="card card-agro">
+  <div class="agro-bg"></div>
+
+  <svg class="acline" width="520" height="290" viewBox="0 0 520 290">
+    <!-- hexagon grid hint -->
+    <polygon points="430,30 460,48 460,84 430,102 400,84 400,48" stroke="#00cc55" stroke-width="1" fill="none" opacity=".14"/>
+    <polygon points="430,110 460,128 460,164 430,182 400,164 400,128" stroke="#00cc55" stroke-width="1" fill="none" opacity=".08"/>
+    <!-- scan line -->
+    <line x1="350" y1="0" x2="520" y2="200" stroke="#00cc55" stroke-width=".8" opacity=".18"/>
+    <!-- leaf dots -->
+    <circle cx="390" cy="145" r="2" fill="#00cc55" opacity=".4"/>
+    <circle cx="420" cy="200" r="1.5" fill="#00cc55" opacity=".3"/>
+    <circle cx="460" cy="170" r="2.5" fill="#00cc55" opacity=".35"/>
+  </svg>
+
+  <span class="watermark">AGR</span>
+
+  <div class="card-inner">
+    <span class="badge">Equipe</span>
+    <div>
+      <div class="team-name">AGRO</div>
+      <div class="tagline">Agrotecnologia · Precisão · IoT no Campo</div>
+    </div>
+    <div class="bottom-row">
+      <span class="group-name">Team Bots</span>
+      <span class="cta">Faça parte</span>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━━━━━ CARD 4 · AEROESPACIAL ━━━━━━━━━━ -->
+<div class="card card-aero">
+  <div class="aero-bg"></div>
+
+  <svg class="acline" width="520" height="290" viewBox="0 0 520 290">
+    <!-- orbit arcs -->
+    <ellipse cx="450" cy="80" rx="80" ry="40" stroke="#aa44ff" stroke-width="1" fill="none" opacity=".15" transform="rotate(-25 450 80)"/>
+    <ellipse cx="450" cy="80" rx="55" ry="28" stroke="#aa44ff" stroke-width=".7" fill="none" opacity=".1" transform="rotate(-25 450 80)"/>
+    <!-- planet dot -->
+    <circle cx="450" cy="80" r="7" fill="#7700ff" opacity=".3"/>
+    <!-- stars -->
+    <circle cx="370" cy="40" r="1.5" fill="white" opacity=".35"/>
+    <circle cx="490" cy="170" r="1" fill="white" opacity=".3"/>
+    <circle cx="410" cy="200" r="1.5" fill="white" opacity=".25"/>
+    <circle cx="500" cy="50" r="1" fill="white" opacity=".4"/>
+    <!-- rocket trajectory -->
+    <path d="M380 220 Q430 150 490 60" stroke="#cc88ff" stroke-width="1" fill="none" stroke-dasharray="4 4" opacity=".2"/>
+  </svg>
+
+  <span class="watermark">AER</span>
+
+  <div class="card-inner">
+    <span class="badge">Equipe</span>
+    <div>
+      <div class="team-name" style="font-size:31px; letter-spacing:-1px;">AEROESPACIAL</div>
+      <div class="tagline">Drones · Foguetes · Exploração Espacial</div>
+    </div>
+    <div class="bottom-row">
+      <span class="group-name">Team Bots</span>
+      <span class="cta">Faça parte</span>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━━━━━ CARD 5 · CARRO ELÉTRICO ━━━━━━━━━━ -->
+<div class="card card-carro">
+  <div class="carro-bg"></div>
+
+  <svg class="acline" width="520" height="290" viewBox="0 0 520 290">
+    <!-- speed lines -->
+    <line x1="340" y1="80" x2="520" y2="80" stroke="#00ffee" stroke-width="1" opacity=".12"/>
+    <line x1="360" y1="100" x2="520" y2="100" stroke="#00ffee" stroke-width=".6" opacity=".08"/>
+    <line x1="380" y1="120" x2="520" y2="120" stroke="#00ffee" stroke-width=".8" opacity=".1"/>
+    <!-- circuit/battery symbol -->
+    <rect x="400" y="140" width="60" height="30" rx="4" stroke="#00cccc" stroke-width="1.2" fill="none" opacity=".15"/>
+    <rect x="458" y="150" width="8" height="10" rx="1" stroke="#00cccc" stroke-width="1" fill="none" opacity=".15"/>
+    <line x1="415" y1="150" x2="415" y2="160" stroke="#00cccc" stroke-width="1.5" opacity=".2"/>
+    <line x1="428" y1="148" x2="428" y2="162" stroke="#00cccc" stroke-width="1.5" opacity=".2"/>
+    <!-- bolt -->
+    <path d="M445 152 L441 156 L444 156 L440 164 L448 158 L445 158 Z" fill="#00ffee" opacity=".3"/>
+    <!-- diagonal line -->
+    <line x1="330" y1="0" x2="520" y2="230" stroke="#00cccc" stroke-width=".8" opacity=".15"/>
+  </svg>
+
+  <span class="watermark">EV</span>
+
+  <div class="card-inner">
+    <span class="badge">Equipe</span>
+    <div>
+      <div class="team-name" style="font-size:28px; letter-spacing:-1px;">CARRO<br>ELÉTRICO</div>
+      <div class="tagline">Mobilidade Elétrica · EV · Energia Limpa</div>
+    </div>
+    <div class="bottom-row">
+      <span class="group-name">Team Bots</span>
+      <span class="cta">Faça parte</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
