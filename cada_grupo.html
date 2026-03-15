@@ -697,34 +697,31 @@ async function submitForm() {
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
-  const payload = {
+  const dados = {
     equipe:  teams[currentTeam].title,
     nome, curso, periodo, tel,
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  try {
-
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    console.warn('Erro ao enviar, salvando localmente:', err);
-  }
+  await new Promise((resolve) => {
+    const img = new Image();
+    const params = new URLSearchParams(dados);
+    img.onload  = resolve;
+    img.onerror = resolve;
+    img.src = SCRIPT_URL + '?' + params.toString();
+    setTimeout(resolve, 4000);
+  });
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
-  all.push({ ...payload, timestamp: new Date().toLocaleString('pt-BR') });
+  all.push({ ...dados, timestamp: new Date().toLocaleString('pt-BR') });
   localStorage.setItem('teambots_inscritos', JSON.stringify(all));
 
   btn.disabled = false;
   document.getElementById('modal-form').classList.add('hide');
   document.getElementById('modal-head').classList.add('hide');
   const t = teams[currentTeam];
-  document.getElementById('success-team').textContent   = t.title;
-  document.getElementById('success-team').style.color   = t.accent;
+  document.getElementById('success-team').textContent      = t.title;
+  document.getElementById('success-team').style.color      = t.accent;
   document.getElementById('success-team').style.borderColor = t.accent;
   document.getElementById('modal-success').classList.add('show');
 }
