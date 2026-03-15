@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Bots</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan:   #00f5ff;
+    --blue:   #0055ff;
+    --green:  #00ff88;
+    --dim:    #0a0a12;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--dim);
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── SCANLINES ──────────────────────────── */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,245,255,.018) 3px,
+      rgba(0,245,255,.018) 4px
+    );
+    pointer-events:none; z-index:999;
+    animation: scanmove 8s linear infinite;
+  }
+  @keyframes scanmove {
+    0%   { background-position-y: 0px; }
+    100% { background-position-y: 200px; }
+  }
+
+  /* ── MOVING SCAN LINE ───────────────────── */
+  .scanbar {
+    position:fixed; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity:.18;
+    animation: scanbar 5s linear infinite;
+    z-index:998; pointer-events:none;
+  }
+  @keyframes scanbar {
+    0%   { top:-4px; }
+    100% { top:100vh; }
+  }
+
+  /* ── GRID BG ────────────────────────────── */
+  .grid-bg {
+    position:fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(0,245,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridfade 4s ease-in-out infinite alternate;
+  }
+  @keyframes gridfade { from{opacity:.6} to{opacity:1} }
+
+  /* ── RADIAL GLOW CENTER ─────────────────── */
+  .glow-center {
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 42% 50%, rgba(0,85,255,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 50%, rgba(0,245,255,.07) 0%, transparent 60%);
+  }
+
+  /* ── PARTICLES ──────────────────────────── */
+  .particles { position:fixed; inset:0; z-index:1; pointer-events:none; }
+  .particle {
+    position:absolute;
+    width:2px; height:2px;
+    border-radius:50%;
+    background: var(--cyan);
+    animation: pfloat var(--d) linear infinite;
+    opacity: 0;
+  }
+  @keyframes pfloat {
+    0%   { transform: translateY(100vh) translateX(0); opacity:0; }
+    10%  { opacity: .6; }
+    90%  { opacity: .4; }
+    100% { transform: translateY(-20px) translateX(var(--dx)); opacity:0; }
+  }
+
+  /* ── WRAPPER ────────────────────────────── */
+  .wrapper {
+    position: relative; z-index:10;
+    width: 960px;
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 40px;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  /* ── LEFT BLOCK ─────────────────────────── */
+  .left { display:flex; flex-direction:column; gap:24px; }
+
+  .top-label {
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--cyan);
+    opacity: .5;
+    animation: fadein 1s ease .2s both;
+  }
+
+  .logo-row {
+    display:flex; align-items:baseline; gap:16px;
+    animation: slidein 1s ease .4s both;
+  }
+  .logo-team {
+    font-family:'Orbitron', monospace;
+    font-size: 72px;
+    font-weight: 900;
+    color: #fff;
+    line-height:1;
+    text-shadow: 0 0 30px rgba(0,245,255,.4), 0 0 60px rgba(0,85,255,.3);
+    animation: glitch 6s infinite;
+  }
+  .logo-bots {
+    font-family:'Orbitron', monospace;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--cyan);
+    line-height:1;
+    text-shadow: 0 0 30px var(--cyan), 0 0 60px rgba(0,245,255,.5);
+    animation: pulse-glow 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%,100% { text-shadow: 0 0 20px var(--cyan), 0 0 50px rgba(0,245,255,.4); }
+    50%      { text-shadow: 0 0 40px var(--cyan), 0 0 100px rgba(0,245,255,.7), 0 0 140px rgba(0,85,255,.3); }
+  }
+  @keyframes glitch {
+    0%,95%,100% { clip-path:none; transform:none; }
+    96% { clip-path:inset(20% 0 60% 0); transform:translate(-3px,0); }
+    97% { clip-path:inset(60% 0 10% 0); transform:translate(3px,0); }
+    98% { clip-path:none; transform:none; }
+  }
+
+  .divider {
+    width:100%; height:1px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+    animation: fadein 1s ease .6s both;
+    position:relative;
+    overflow:visible;
+  }
+  .divider::after {
+    content:'';
+    position:absolute; left:0; top:-1px;
+    width:60px; height:3px;
+    background: var(--cyan);
+    animation: lineslide 3s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--cyan);
+  }
+  @keyframes lineslide {
+    0%   { left:0; width:60px; }
+    50%  { left:calc(100% - 60px); width:100px; }
+    100% { left:0; width:60px; }
+  }
+
+  .subtitle {
+    font-size:14px;
+    letter-spacing:4px;
+    color:#fff;
+    opacity:.55;
+    text-transform:uppercase;
+    animation: fadein 1s ease .8s both;
+  }
+
+  /* ── TEAMS TICKER ───────────────────────── */
+  .teams-row {
+    display:flex; gap:14px; flex-wrap:wrap;
+    animation: fadein 1s ease 1s both;
+  }
+  .team-chip {
+    font-family:'Orbitron', monospace;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:3px;
+    padding: 6px 14px;
+    border: 1px solid;
+    text-transform:uppercase;
+    position:relative;
+    overflow:hidden;
+    transition: all .3s;
+  }
+  .team-chip::before {
+    content:'';
+    position:absolute; inset:0;
+    background: currentColor;
+    opacity:0;
+    transition: opacity .3s;
+  }
+  .team-chip:nth-child(1) { color:#0088ff; border-color:#0088ff44; animation: chipin .5s ease 1.2s both; }
+  .team-chip:nth-child(2) { color:#ff6a00; border-color:#ff6a0044; animation: chipin .5s ease 1.4s both; }
+  .team-chip:nth-child(3) { color:#00cc55; border-color:#00cc5544; animation: chipin .5s ease 1.6s both; }
+  .team-chip:nth-child(4) { color:#aa44ff; border-color:#aa44ff44; animation: chipin .5s ease 1.8s both; }
+  .team-chip:nth-child(5) { color:#00cccc; border-color:#00cccc44; animation: chipin .5s ease 2.0s both; }
+  @keyframes chipin {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* animated active chip cycling */
+  .team-chip { animation-fill-mode: both; }
+  .team-chip.active::before { opacity:.12; }
+
+  .bottom-info {
+    display:flex; align-items:center; gap:16px;
+    animation: fadein 1s ease 2.2s both;
+  }
+  .dot-blink {
+    width:8px; height:8px; border-radius:50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+    animation: blink 1.2s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .live-text {
+    font-size:12px; letter-spacing:4px; color:var(--green); text-transform:uppercase;
+  }
+  .separator { width:1px; height:18px; background:#fff3; }
+  .desc-text {
+    font-size:12px; color:#fff5; letter-spacing:1px;
+  }
+
+  /* ── RIGHT — QR BOX ─────────────────────── */
+  .qr-box {
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+    animation: fadein 1.2s ease 1s both;
+  }
+
+  .qr-frame {
+    width:180px; height:180px;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* corner brackets */
+  .qr-frame::before, .qr-frame::after,
+  .qr-frame .corner-br, .qr-frame .corner-bl {
+    content:'';
+    position:absolute;
+    width:24px; height:24px;
+    border-color: var(--cyan);
+    border-style:solid;
+    opacity:.8;
+  }
+  .qr-frame::before  { top:0; left:0;  border-width:2px 0 0 2px; }
+  .qr-frame::after   { top:0; right:0; border-width:2px 2px 0 0; }
+  .qr-frame .corner-br { bottom:0; right:0; border-width:0 2px 2px 0; }
+  .qr-frame .corner-bl { bottom:0; left:0;  border-width:0 0 2px 2px; }
+
+  /* animated scanning line inside QR */
+  .qr-scan {
+    position:absolute; left:8px; right:8px; height:2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow: 0 0 8px var(--cyan);
+    animation: qrscan 2s ease-in-out infinite;
+    opacity:.7;
+  }
+  @keyframes qrscan {
+    0%   { top:8px; opacity:.7; }
+    50%  { top:calc(100% - 10px); opacity:.9; }
+    100% { top:8px; opacity:.7; }
+  }
+
+  .qr-placeholder {
+    width:148px; height:148px;
+    background: rgba(0,245,255,.04);
+    border: 1px dashed rgba(0,245,255,.2);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:8px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* subtle pixel pattern */
+  .qr-placeholder::before {
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle, rgba(0,245,255,.15) 1px, transparent 1px);
+    background-size:10px 10px;
+    opacity:.4;
+  }
+
+  .qr-icon {
+    font-size:28px; opacity:.3;
+    position:relative; z-index:1;
+  }
+  .qr-text {
+    font-size:9px; letter-spacing:3px;
+    color:var(--cyan); opacity:.4;
+    text-align:center; text-transform:uppercase;
+    position:relative; z-index:1;
+  }
+
+  .qr-label {
+    font-size:10px; letter-spacing:4px;
+    color:var(--cyan); opacity:.45;
+    text-transform:uppercase; text-align:center;
+  }
+
+  /* ── ANIMATIONS ─────────────────────────── */
+  @keyframes fadein {
+    from { opacity:0; } to { opacity:1; }
+  }
+  @keyframes slidein {
+    from { opacity:0; transform:translateX(-30px); }
+    to   { opacity:1; transform:translateX(0); }
+  }
+
+  /* ── CORNER DECORATIONS ─────────────────── */
+  .corner-deco {
+    position:fixed; z-index:5;
+    pointer-events:none;
+  }
+  .corner-deco svg { display:block; }
+
+  /* animated HUD circles */
+  .hud-ring {
+    position:fixed; z-index:2; pointer-events:none;
+    border-radius:50%;
+    border:1px solid rgba(0,245,255,.06);
+    animation: expand 8s ease-out infinite;
+  }
+  @keyframes expand {
+    0%   { transform:scale(.95); opacity:.6; }
+    50%  { transform:scale(1.05); opacity:.3; }
+    100% { transform:scale(.95); opacity:.6; }
+  }
+
+  /* typing cursor on subtitle */
+  .cursor {
+    display:inline-block;
+    width:2px; height:14px;
+    background:var(--cyan);
+    margin-left:4px;
+    vertical-align:middle;
+    animation: blink .8s step-end infinite;
+  }
+</style>
+</head>
+<body>
+
+<div class="scanbar"></div>
+<div class="grid-bg"></div>
+<div class="glow-center"></div>
+
+<!-- particles -->
+<div class="particles" id="particles"></div>
+
+<!-- HUD rings background -->
+<div class="hud-ring" style="width:600px;height:600px;left:calc(50% - 620px);top:calc(50% - 300px);animation-delay:0s"></div>
+<div class="hud-ring" style="width:400px;height:400px;left:calc(50% - 520px);top:calc(50% - 200px);animation-delay:2s"></div>
+
+<!-- corner decorations -->
+<div class="corner-deco" style="top:20px;left:20px">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <polyline points="0,40 0,0 40,0" fill="none" stroke="rgba(0,245,255,.25)" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="3" fill="rgba(0,245,255,.4)"/>
+  </svg>
+</div>
+<div class="corner-deco" style="top:20px;right:20px">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <polyline points="60,40 60,0 20,0" fill="none" stroke="rgba(0,245,255,.25)" stroke-width="1.5"/>
+    <circle cx="60" cy="0" r="3" fill="rgba(0,245,255,.4)"/>
+  </svg>
+</div>
+<div class="corner-deco" style="bottom:20px;left:20px">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <polyline points="0,20 0,60 40,60" fill="none" stroke="rgba(0,245,255,.25)" stroke-width="1.5"/>
+    <circle cx="0" cy="60" r="3" fill="rgba(0,245,255,.4)"/>
+  </svg>
+</div>
+<div class="corner-deco" style="bottom:20px;right:20px">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <polyline points="60,20 60,60 20,60" fill="none" stroke="rgba(0,245,255,.25)" stroke-width="1.5"/>
+    <circle cx="60" cy="60" r="3" fill="rgba(0,245,255,.4)"/>
+  </svg>
+</div>
+
+<!-- ── MAIN LAYOUT ── -->
+<div class="wrapper">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="top-label">FACULDADE · GRUPO DE TECNOLOGIA · 2025</div>
+
+    <div class="logo-row">
+      <span class="logo-team">TEAM</span>
+      <span class="logo-bots">BOTS</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="subtitle">Área de Tecnologia da Informação<span class="cursor"></span></div>
+
+    <div class="teams-row">
+      <div class="team-chip" id="chip-ia">IA</div>
+      <div class="team-chip" id="chip-rob">Robótica</div>
+      <div class="team-chip" id="chip-agro">Agro</div>
+      <div class="team-chip" id="chip-aero">Aeroespacial</div>
+      <div class="team-chip" id="chip-ev">Carro Elétrico</div>
+    </div>
+
+    <div class="bottom-info">
+      <div class="dot-blink"></div>
+      <span class="live-text">Recrutando</span>
+      <div class="separator"></div>
+      <span class="desc-text">5 equipes · projetos reais · faça parte</span>
+    </div>
+  </div>
+
+  <!-- RIGHT — QR -->
+  <div class="qr-box">
+    <div class="qr-frame">
+      <div class="corner-br"></div>
+      <div class="corner-bl"></div>
+      <div class="qr-scan"></div>
+      <div class="qr-placeholder">
+        <div class="qr-icon">⬛</div>
+        <div class="qr-text">QR Code<br>em breve</div>
+      </div>
+    </div>
+    <div class="qr-label">Escaneie &amp; entre</div>
+  </div>
+
+</div>
+
+<script>
+  // ── particles ──
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 2.5 + 1;
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${size}px; height:${size}px;
+      --d:${6 + Math.random()*12}s;
+      --dx:${(Math.random()-.5)*80}px;
+      animation-delay:${-Math.random()*14}s;
+      opacity:0;
+    `;
+    // alternating colors
+    const colors = ['#00f5ff','#0055ff','#00ff88','#aa44ff'];
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    container.appendChild(p);
+  }
+
+  // ── cycle active chip highlight ──
+  const chips = ['chip-ia','chip-rob','chip-agro','chip-aero','chip-ev'];
+  let ci = 0;
+  setInterval(() => {
+    document.querySelectorAll('.team-chip').forEach(c => c.classList.remove('active'));
+    document.getElementById(chips[ci]).classList.add('active');
+    ci = (ci + 1) % chips.length;
+  }, 1800);
+</script>
+</body>
+</html>
