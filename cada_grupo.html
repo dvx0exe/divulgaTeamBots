@@ -705,12 +705,13 @@ async function submitForm() {
 
   await new Promise((resolve) => {
     const params = new URLSearchParams(dados);
-    const script = document.createElement('script');
-    script.src = SCRIPT_URL + '?' + params.toString();
-    script.onload  = resolve;
-    script.onerror = resolve;
-    document.getElementById('jsonp-container').appendChild(script);
-    setTimeout(resolve, 3000);
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = SCRIPT_URL + '?' + params.toString();
+    iframe.onload  = resolve;
+    iframe.onerror = resolve;
+    document.getElementById('jsonp-container').appendChild(iframe);
+    setTimeout(resolve, 4000);
   });
   document.getElementById('jsonp-container').innerHTML = '';
 
