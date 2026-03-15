@@ -704,19 +704,15 @@ async function submitForm() {
   };
 
   await new Promise((resolve) => {
-    const callbackName = 'tb_cb_' + Date.now();
-    window[callbackName] = function() {
-      delete window[callbackName];
-      document.getElementById('jsonp-container').innerHTML = '';
-      resolve();
-    };
-    const params = new URLSearchParams({ ...dados, callback: callbackName });
+    const params = new URLSearchParams(dados);
     const script = document.createElement('script');
     script.src = SCRIPT_URL + '?' + params.toString();
+    script.onload  = resolve;
     script.onerror = resolve;
     document.getElementById('jsonp-container').appendChild(script);
-    setTimeout(resolve, 5000);
+    setTimeout(resolve, 3000);
   });
+  document.getElementById('jsonp-container').innerHTML = '';
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
   all.push({ ...dados, timestamp: new Date().toLocaleString('pt-BR') });
