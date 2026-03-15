@@ -21,7 +21,7 @@
     padding-bottom: 80px;
   }
 
-  /* ── GRID BG ── */
+  
   body::before {
     content:''; position:fixed; inset:0; z-index:0;
     background-image:
@@ -37,7 +37,7 @@
     ); pointer-events:none;
   }
 
-  /* ── HEADER ── */
+  
   .header {
     position:relative; z-index:10;
     padding: 44px 20px 32px;
@@ -68,7 +68,7 @@
     color:#fff; opacity:.3; text-transform:uppercase;
   }
 
-  /* ── INTRO ── */
+  
   .intro {
     position:relative; z-index:10;
     padding: 24px 24px 4px; text-align:center;
@@ -80,7 +80,7 @@
   }
   .intro strong { color:var(--cyan); opacity:1; }
 
-  /* ── CARDS ── */
+  
   .cards {
     position:relative; z-index:10;
     padding: 18px 16px 20px;
@@ -160,7 +160,7 @@
     transition: opacity .2s, background .2s;
   }
 
-  /* CARD THEMES */
+  
   .card-ia  { background:#050d1a; color:#e0f0ff;
     box-shadow:0 4px 28px #0055ff1a, 0 0 0 1px #0055ff2a; }
   .card-ia  .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #0033aa15 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #001f88 0%, transparent 55%); }
@@ -181,9 +181,7 @@
     box-shadow:0 4px 28px #00cccc1a, 0 0 0 1px #00cccc2a; }
   .card-ev  .card-bg { background: radial-gradient(ellipse 70% 80% at 88% 50%, #003333 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 0% 90%, #002222 0%, transparent 55%); }
 
-  /* ══════════════════════════════════════
-     MODAL OVERLAY
-  ══════════════════════════════════════ */
+  
   .modal-overlay {
     display:none;
     position:fixed; inset:0; z-index:1000;
@@ -196,7 +194,7 @@
   }
   .modal-overlay.open { display:flex; }
 
-  /* bottom sheet style */
+  
   .modal {
     width:100%; max-width:520px;
     border-radius:20px 20px 0 0;
@@ -213,14 +211,14 @@
     to   { transform:translateY(0); }
   }
 
-  /* drag handle */
+  
   .modal-handle {
     width:40px; height:4px; border-radius:2px;
     background:rgba(255,255,255,.15);
     margin:0 auto 20px;
   }
 
-  /* colored top accent per team */
+  
   .modal-accent {
     position:absolute; top:0; left:0; right:0;
     height:3px; border-radius:20px 20px 0 0;
@@ -251,7 +249,7 @@
     text-transform:uppercase; opacity:.4; color:#fff;
   }
 
-  /* FORM */
+  
   .modal-form { padding:22px 24px 32px; display:flex; flex-direction:column; gap:16px; }
 
   .field { display:flex; flex-direction:column; gap:6px; }
@@ -293,7 +291,7 @@
 
   .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 
-  /* submit button */
+  
   .btn-submit {
     width:100%;
     background:var(--accent, var(--cyan));
@@ -309,7 +307,7 @@
   }
   .btn-submit:active { opacity:.85; transform:scale(.98); }
 
-  /* cancel */
+  
   .btn-cancel {
     width:100%;
     background:transparent;
@@ -321,7 +319,7 @@
     cursor:pointer;
   }
 
-  /* ── SUCCESS STATE ── */
+  
   .modal-success {
     display:none;
     flex-direction:column;
@@ -368,7 +366,7 @@
     text-transform:uppercase; border:none; cursor:pointer;
   }
 
-  /* ── FOOTER ── */
+  
   .footer {
     position:fixed; bottom:0; left:0; right:0; z-index:50;
     height:46px; border-top:1px solid rgba(0,245,255,.08);
@@ -393,7 +391,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-sup">Faculdade · T.I.</div>
   <div class="header-logo"><span class="t">TEAM </span><span class="b">BOTS</span></div>
@@ -401,15 +398,13 @@
   <div class="header-sub">Escolha sua equipe</div>
 </div>
 
-<!-- INTRO -->
 <div class="intro">
   <p>Somos um grupo de <strong>5 equipes</strong> de tecnologia.<br>Toque na equipe e se inscreva!</p>
 </div>
 
-<!-- CARDS -->
 <div class="cards">
 
-  <!-- IA -->
+  
   <div class="card card-ia" onclick="openModal('ia')">
     <div class="card-bg"></div>
     <svg class="card-svg" viewBox="0 0 420 136">
@@ -436,7 +431,7 @@
     </div>
   </div>
 
-  <!-- ROBÓTICA -->
+  
   <div class="card card-rob" onclick="openModal('rob')">
     <div class="card-bg"></div>
     <svg class="card-svg" viewBox="0 0 420 136">
@@ -462,7 +457,7 @@
     </div>
   </div>
 
-  <!-- AGRO -->
+  
   <div class="card card-agro" onclick="openModal('agro')">
     <div class="card-bg"></div>
     <svg class="card-svg" viewBox="0 0 420 136">
@@ -486,7 +481,7 @@
     </div>
   </div>
 
-  <!-- AEROESPACIAL -->
+  
   <div class="card card-aero" onclick="openModal('aero')">
     <div class="card-bg"></div>
     <svg class="card-svg" viewBox="0 0 420 136">
@@ -511,7 +506,7 @@
     </div>
   </div>
 
-  <!-- CARRO ELÉTRICO -->
+  
   <div class="card card-ev" onclick="openModal('ev')">
     <div class="card-bg"></div>
     <svg class="card-svg" viewBox="0 0 420 136">
@@ -539,23 +534,20 @@
 
 </div>
 
-<!-- ══════════════════════════════════════
-     MODAL
-══════════════════════════════════════ -->
 <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal-box">
 
     <div class="modal-accent" id="modal-accent"></div>
     <div class="modal-handle"></div>
 
-    <!-- HEAD -->
+    
     <div class="modal-head" id="modal-head">
       <div class="modal-badge" id="modal-badge"></div>
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-sub"   id="modal-sub"></div>
     </div>
 
-    <!-- FORM -->
+    
     <div class="modal-form" id="modal-form">
 
       <div class="field">
@@ -596,7 +588,7 @@
 
     </div>
 
-    <!-- SUCCESS -->
+    
     <div class="modal-success" id="modal-success">
       <div class="success-icon">✓</div>
       <div class="success-title">Inscrição enviada!</div>
@@ -608,7 +600,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
   <div class="footer-dot"></div>
   <div class="footer-text">Team Bots · <span>Recrutando agora</span></div>
@@ -649,25 +640,20 @@ function openModal(id) {
   const t = teams[id];
   currentTeam = id;
 
-  // populate head
   document.getElementById('modal-badge').textContent  = t.num;
   document.getElementById('modal-badge').style.color  = t.accent;
   document.getElementById('modal-title').textContent  = t.title;
   document.getElementById('modal-sub').textContent    = t.sub;
   document.getElementById('modal-accent').style.background = t.accent;
 
-  // color accent on inputs focus via CSS variable
   document.getElementById('modal-box').style.setProperty('--accent', t.accent);
 
-  // submit button color
   document.getElementById('btn-submit').style.background = t.accent;
 
-  // reset form & success
   document.getElementById('modal-form').classList.remove('hide');
   document.getElementById('modal-head').classList.remove('hide');
   document.getElementById('modal-success').classList.remove('show');
 
-  // clear fields
   ['f-nome','f-curso','f-tel','f-motivo'].forEach(id => {
     const el = document.getElementById(id);
     if(el) el.value = '';
@@ -687,46 +673,62 @@ function handleOverlayClick(e) {
   if(e.target === document.getElementById('modal')) closeModal();
 }
 
-function submitForm() {
-  const nome = document.getElementById('f-nome').value.trim();
-  const curso = document.getElementById('f-curso').value.trim();
-  const periodo = document.getElementById('f-periodo').value;
-  const tel = document.getElementById('f-tel').value.trim();
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsGUOSLlw-JXbceYp4ZYNaZl5ErMrBcT8fUOMwNu-NPlpgs-FVM9j8Da0d3Xiy_bz9ZQ/exec";
 
-  if(!nome || !curso || !periodo || !tel) {
-    // shake fields with error
+async function submitForm() {
+  const nome    = document.getElementById('f-nome').value.trim();
+  const curso   = document.getElementById('f-curso').value.trim();
+  const periodo = document.getElementById('f-periodo').value;
+  const tel     = document.getElementById('f-tel').value.trim();
+
+  if (!nome || !curso || !periodo || !tel) {
     const btn = document.getElementById('btn-submit');
     btn.style.background = '#ff4444';
     btn.textContent = 'Preencha os campos obrigatórios';
     setTimeout(() => {
-      const t = teams[currentTeam];
-      btn.style.background = t.accent;
+      btn.style.background = teams[currentTeam].accent;
       btn.textContent = 'Enviar inscrição';
-    }, 2000);
+    }, 2500);
     return;
   }
 
-  // store locally (simple demo — in production connect to a backend/sheet)
-  const entry = {
-    equipe: teams[currentTeam].title,
+  const btn = document.getElementById('btn-submit');
+  btn.textContent = 'Enviando…';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+
+  const payload = {
+    equipe:  teams[currentTeam].title,
     nome, curso, periodo, tel,
-    motivo: document.getElementById('f-motivo').value.trim(),
-    timestamp: new Date().toLocaleString('pt-BR')
+    motivo:  document.getElementById('f-motivo').value.trim()
   };
+
+  try {
+
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.warn('Erro ao enviar, salvando localmente:', err);
+  }
+
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
-  all.push(entry);
+  all.push({ ...payload, timestamp: new Date().toLocaleString('pt-BR') });
   localStorage.setItem('teambots_inscritos', JSON.stringify(all));
 
-  // show success
+  btn.disabled = false;
   document.getElementById('modal-form').classList.add('hide');
   document.getElementById('modal-head').classList.add('hide');
-  document.getElementById('success-team').textContent = teams[currentTeam].title;
-  document.getElementById('success-team').style.color = teams[currentTeam].accent;
-  document.getElementById('success-team').style.borderColor = teams[currentTeam].accent;
+  const t = teams[currentTeam];
+  document.getElementById('success-team').textContent   = t.title;
+  document.getElementById('success-team').style.color   = t.accent;
+  document.getElementById('success-team').style.borderColor = t.accent;
   document.getElementById('modal-success').classList.add('show');
 }
 
-// close on back button (Android)
 window.addEventListener('popstate', closeModal);
 </script>
 </body>
