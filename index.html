@@ -238,9 +238,20 @@
     position:relative;
   }
 
-  #qrcode, #qrcode canvas, #qrcode img {
+  #qrcode {
+    display:flex !important;
+    align-items:center; justify-content:center;
+    width:228px !important; height:228px !important;
+    overflow:hidden;
+  }
+  /* qrcodejs gera canvas + img — mostra só o canvas */
+  #qrcode canvas {
     display:block !important;
     width:228px !important; height:228px !important;
+    flex-shrink:0;
+  }
+  #qrcode img {
+    display:none !important;
   }
 
   .qr-ring {
