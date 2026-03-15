@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Bots · TV</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
   :root {
     --cyan:  #00f5ff;
@@ -239,19 +239,8 @@
   }
 
   #qrcode {
-    display:flex !important;
-    align-items:center; justify-content:center;
-    width:228px !important; height:228px !important;
-    overflow:hidden;
-  }
-  /* qrcodejs gera canvas + img — mostra só o canvas */
-  #qrcode canvas {
     display:block !important;
     width:228px !important; height:228px !important;
-    flex-shrink:0;
-  }
-  #qrcode img {
-    display:none !important;
   }
 
   .qr-ring {
@@ -399,7 +388,11 @@
       <div class="qb bl"></div>
       <div class="qr-scan"></div>
       <div class="qr-inner">
-        <div id="qrcode"></div>
+        <img id="qrcode"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=228x228&ecc=H&data=https://dvx0exe.github.io/divulgaTeamBots/cada_grupo.html"
+          width="228" height="228"
+          alt="QR Code Team Bots"
+        />
       </div>
       <div class="qr-ring"></div>
     </div>
@@ -418,14 +411,6 @@
 </div>
 
 <script>
-// QR Code
-new QRCode(document.getElementById("qrcode"), {
-  text: "https://dvx0exe.github.io/divulgaTeamBots/cada_grupo.html",
-  width: 228, height: 228,
-  colorDark: "#000000", colorLight: "#ffffff",
-  correctLevel: QRCode.CorrectLevel.H
-});
-
 // Particles
 const pts = document.getElementById('pts');
 const colors = ['#00f5ff','#0055ff','#00ff88','#aa44ff','#ffffff'];
