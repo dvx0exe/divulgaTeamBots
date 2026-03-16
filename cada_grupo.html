@@ -673,7 +673,7 @@ function handleOverlayClick(e) {
   if(e.target === document.getElementById('modal')) closeModal();
 }
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsGUOSLlw-JXbceYp4ZYNaZl5ErMrBcT8fUOMwNu-NPlpgs-FVM9j8Da0d3Xiy_bz9ZQ/exec";
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe0kd-2VbrhL6_G9MjlMKu4fTj7q-z-Sr5LlVnPe8hkgTqPVg/formResponse";
 
 function submitForm() {
   const nome    = document.getElementById('f-nome').value.trim();
@@ -703,8 +703,15 @@ function submitForm() {
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  const params = new URLSearchParams(dados);
-  navigator.sendBeacon(SCRIPT_URL + '?' + params.toString());
+  const formData = new FormData();
+  formData.append('entry.1019971374', dados.nome);
+  formData.append('entry.153928910',  dados.equipe);
+  formData.append('entry.872700032',  dados.curso);
+  formData.append('entry.1764625468', dados.periodo);
+  formData.append('entry.427931869',  dados.tel);
+  formData.append('entry.199820052',  dados.motivo);
+
+  fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: formData }).catch(() => {});
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
   all.push({ ...dados, timestamp: new Date().toLocaleString('pt-BR') });
