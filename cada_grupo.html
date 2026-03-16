@@ -675,7 +675,7 @@ function handleOverlayClick(e) {
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsGUOSLlw-JXbceYp4ZYNaZl5ErMrBcT8fUOMwNu-NPlpgs-FVM9j8Da0d3Xiy_bz9ZQ/exec";
 
-async function submitForm() {
+function submitForm() {
   const nome    = document.getElementById('f-nome').value.trim();
   const curso   = document.getElementById('f-curso').value.trim();
   const periodo = document.getElementById('f-periodo').value;
@@ -703,17 +703,15 @@ async function submitForm() {
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  await new Promise((resolve) => {
-    const params = new URLSearchParams(dados);
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = SCRIPT_URL + '?' + params.toString();
-    iframe.onload  = resolve;
-    iframe.onerror = resolve;
-    document.getElementById('jsonp-container').appendChild(iframe);
-    setTimeout(resolve, 4000);
-  });
-  document.getElementById('jsonp-container').innerHTML = '';
+  const form = document.getElementById('hidden-form');
+  form.action = SCRIPT_URL;
+  document.getElementById('hf-equipe').value  = dados.equipe;
+  document.getElementById('hf-nome').value    = dados.nome;
+  document.getElementById('hf-curso').value   = dados.curso;
+  document.getElementById('hf-periodo').value = dados.periodo;
+  document.getElementById('hf-tel').value     = dados.tel;
+  document.getElementById('hf-motivo').value  = dados.motivo;
+  form.submit();
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
   all.push({ ...dados, timestamp: new Date().toLocaleString('pt-BR') });
@@ -731,6 +729,15 @@ async function submitForm() {
 
 window.addEventListener('popstate', closeModal);
 </script>
-<div id="jsonp-container" style="display:none"></div>
+
+<iframe name="hidden-frame" style="display:none"></iframe>
+<form id="hidden-form" method="GET" target="hidden-frame" style="display:none">
+  <input type="hidden" name="equipe"  id="hf-equipe">
+  <input type="hidden" name="nome"    id="hf-nome">
+  <input type="hidden" name="curso"   id="hf-curso">
+  <input type="hidden" name="periodo" id="hf-periodo">
+  <input type="hidden" name="tel"     id="hf-tel">
+  <input type="hidden" name="motivo"  id="hf-motivo">
+</form>
 </body>
 </html>
