@@ -703,19 +703,19 @@ function submitForm() {
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  const params = new URLSearchParams();
-  params.append('entry.1019971374', dados.nome);
-  params.append('entry.153928910',  dados.equipe);
-  params.append('entry.872700032',  dados.curso);
-  params.append('entry.1764625468', dados.periodo);
-  params.append('entry.427931869',  dados.tel);
-  params.append('entry.199820052',  dados.motivo);
+  const body = [
+    'entry.1019971374=' + encodeURIComponent(dados.nome),
+    'entry.153928910='  + encodeURIComponent(dados.equipe),
+    'entry.872700032='  + encodeURIComponent(dados.curso),
+    'entry.1764625468=' + encodeURIComponent(dados.periodo),
+    'entry.427931869='  + encodeURIComponent(dados.tel),
+    'entry.199820052='  + encodeURIComponent(dados.motivo)
+  ].join('&');
 
   fetch(FORM_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString()
+    body: body
   }).catch(() => {});
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
