@@ -703,18 +703,19 @@ function submitForm() {
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  const params = new URLSearchParams({
-    'entry.1019971374': dados.nome,
-    'entry.153928910':  dados.equipe,
-    'entry.872700032':  dados.curso,
-    'entry.1371818575': dados.periodo,
-    'entry.884169569':  dados.tel,
-    'entry.199820052':  dados.motivo
-  });
+  const params = [
+    'entry.1019971374=' + encodeURIComponent(dados.nome),
+    'entry.153928910='  + encodeURIComponent(dados.equipe),
+    'entry.872700032='  + encodeURIComponent(dados.curso),
+    'entry.1371818575=' + encodeURIComponent(dados.periodo),
+    'entry.884169569='  + encodeURIComponent(dados.tel),
+    'entry.199820052='  + encodeURIComponent(dados.motivo)
+  ].join('&');
 
   fetch(FORM_URL, {
     method: 'POST',
     mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
     body: params
   }).catch(() => {});
 
