@@ -703,14 +703,8 @@ function submitForm() {
     motivo:  document.getElementById('f-motivo').value.trim()
   };
 
-  const form = document.getElementById('hidden-form');
-  document.getElementById('hf-equipe').value  = dados.equipe;
-  document.getElementById('hf-nome').value    = dados.nome;
-  document.getElementById('hf-curso').value   = dados.curso;
-  document.getElementById('hf-periodo').value = dados.periodo;
-  document.getElementById('hf-tel').value     = dados.tel;
-  document.getElementById('hf-motivo').value  = dados.motivo;
-  form.submit();
+  const params = new URLSearchParams(dados);
+  navigator.sendBeacon(SCRIPT_URL + '?' + params.toString());
 
   const all = JSON.parse(localStorage.getItem('teambots_inscritos') || '[]');
   all.push({ ...dados, timestamp: new Date().toLocaleString('pt-BR') });
@@ -729,15 +723,5 @@ function submitForm() {
 window.addEventListener('popstate', closeModal);
 </script>
 
-<iframe name="hidden-frame" style="display:none"></iframe>
-<form id="hidden-form" method="GET" target="hidden-frame" style="display:none"
-  action="https://script.google.com/macros/s/AKfycbwsGUOSLlw-JXbceYp4ZYNaZl5ErMrBcT8fUOMwNu-NPlpgs-FVM9j8Da0d3Xiy_bz9ZQ/exec">
-  <input type="hidden" name="equipe"  id="hf-equipe">
-  <input type="hidden" name="nome"    id="hf-nome">
-  <input type="hidden" name="curso"   id="hf-curso">
-  <input type="hidden" name="periodo" id="hf-periodo">
-  <input type="hidden" name="tel"     id="hf-tel">
-  <input type="hidden" name="motivo"  id="hf-motivo">
-</form>
 </body>
 </html>
