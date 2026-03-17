@@ -707,8 +707,8 @@ function submitForm() {
   fd.append('entry.1019971374', dados.nome);
   fd.append('entry.153928910',  dados.equipe);
   fd.append('entry.872700032',  dados.curso);
-  fd.append('entry.1371818575', dados.periodo);
-  fd.append('entry.199820052',  dados.tel);
+  fd.append('entry.199820052',  dados.periodo);
+  fd.append('entry.1371818575', dados.tel);
   fd.append('entry.884169569',  dados.motivo);
 
   fetch(FORM_URL, { method:'POST', mode:'no-cors', body: fd }).catch(()=>{});
